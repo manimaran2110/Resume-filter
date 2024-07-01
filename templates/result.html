@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Search Results for Keywords:</h1>
+        <ul>
+            {% for keyword in keywords %}
+                <li>{{ keyword }}</li>
+            {% endfor %}
+        </ul>
+        <p>Search condition: {{ condition }}</p>
+        {% if files %}
+            <p>Found {{ files|length }} resumes matching the keywords:</p>
+            <ul>
+                {% for filename in files %}
+                    <li><a href="{{ url_for('download_file', filename=filename) }}">{{ filename }}</a></li>
+                {% endfor %}
+            </ul>
+            <form action="{{ url_for('download_all') }}" method="get">
+                <button type="submit" class="button-down">Download All as Zip</button>
+            </form>
+        {% else %}
+            <p>No matching resumes found.</p>
+        {% endif %}
+        <a href="/" class="button">Go Back</a>
+        <div class="button-container">
+            <a href="/view_db" class="button">View Database</a>
+        </div>
+        <a href="{{ url_for('logout') }}" class="button-red">Logout</a>
+    </div>
+</body>
+</html>

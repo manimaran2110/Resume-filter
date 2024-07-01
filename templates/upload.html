@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Resumes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Search Resumes</h1>
+        <form action="/" method="post" enctype="multipart/form-data">
+            <label for="jobDescription">Job Description:</label>
+            <input type="text" id="jobDescription" name="jobDescription" required>
+            
+            <label for="numKeywords">Number of keywords:</label>
+            <input type="number" id="numKeywords" name="numKeywords" min="1" max="10" required>
+            
+            <div id="keyword-fields"></div>
+            
+            <label for="condition">Search condition:</label>
+            <select name="condition" id="condition" required>
+                <option value="and">All keywords (AND)</option>
+                <option value="or">Any keyword (OR)</option>
+            </select>
+            
+            <label for="file">Select files:</label>
+            <input type="file" name="file" id="file" multiple required>
+            
+            <button type="submit">Upload and Search</button>
+
+            <a href="{{ url_for('logout') }}" class="button-red">Logout</a>
+        </form>
+    </div>
+    <script>
+        const numKeywordsInput = document.getElementById('numKeywords');
+        const keywordFields = document.getElementById('keyword-fields');
+        
+        numKeywordsInput.addEventListener('change', () => {
+            keywordFields.innerHTML = '';
+            const numKeywords = parseInt(numKeywordsInput.value);
+            for (let i = 1; i <= numKeywords; i++) {
+                const label = document.createElement('label');
+                label.setAttribute('for', `keyword${i}`);
+                label.textContent = `Keyword ${i}:`;
+                const input = document.createElement('input');
+                input.setAttribute('type', 'text');
+                input.setAttribute('id', `keyword${i}`);
+                input.setAttribute('name', `keyword${i}`);
+                input.required = true;
+                keywordFields.appendChild(label);
+                keywordFields.appendChild(input);
+            }
+        });
+    </script>
+</body>
+</html>

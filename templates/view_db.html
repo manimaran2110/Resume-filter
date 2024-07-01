@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Database</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .table-container {
+            max-height: 600px; /* Set a max height for the table container */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Resume Database</h1>
+        
+        <!-- Add a div wrapper for the table with scrolling -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nearest Name</th>
+                        <th>New Filename</th>
+                        <th>Keywords</th>
+                        <th>Email Id</th>
+                        <th>Contact Number</th>
+                        <th>Job Description</th>
+                        <th>Job ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for resume in resumes %}
+                    <tr>
+                        <td>{{ resume.name }}</td>
+                        <td>{{ resume.new_filename }}</td>
+                        <td>{{ resume.keywords }}</td>
+                        <td>{{ resume.email }}</td> 
+                        <td>{{ resume.contact_number }}</td>
+                        <td>{{ resume.job_description }}</td>
+                        <td>{{ resume.job_id }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <a href="/" class="button">Go Back</a>
+        <a href="{{ url_for('logout') }}" class="button-red">Logout</a>
+    </div>
+</body>
+</html>
